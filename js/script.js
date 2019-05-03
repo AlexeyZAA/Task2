@@ -2,7 +2,7 @@ var valid;
 var flag;
 $(document).ready(function () {
     $("#btnVar").click(function () {
-		//делаем флаг для вывода сообщения о неверной позиции
+        //делаем флаг для вывода сообщения о неверной позиции
         flag = 0;
         //полуяаем текущую позицию
         var position = $('#pos').val();
@@ -19,60 +19,61 @@ $(document).ready(function () {
         ];
         //приводим значение поля позиции к регистру элементов доски
         var positionU = position.toUpperCase();
-		//строка для хранения результата вариантов ходов
-		var strres='';
-		
-        $.each(chessboard, function (index, value) {
-			//проверяем правильность текущей позиции, если действительная выводим возможные варианты
-			valid = $.inArray(positionU, value);
-			if (valid != -1) {
-				var resvalid = [];
-				//пароверяем направление верх
-				if ((index+2) <= 7){
-					if(valid+1 <= 7) {
-						resvalid.push(chessboard[index+2][valid+1]);
-					}
-					if(valid-1 >= 0) {
-						resvalid.push(chessboard[index+2][valid-1]);
-					}
-				}
-				if((index+1) <= 7){
-					if(valid+3 <= 7) {
-						resvalid.push(chessboard[index+1][valid+2]);
-					}
-					if(valid-2 >= 0) {
-						resvalid.push(chessboard[index+1][valid-2]);
-					}
-				}
-				//пароверяем направление низ
-				if((index-2) >= 0){
-					if(valid+1 <= 7) {
-						resvalid.push(chessboard[index-2][valid+1]);
-					}
-					if(valid-1 >= 0) {
-						resvalid.push(chessboard[index-2][valid-1]);
-					}
-				}
-				if((index-1) >= 0){
-					if(valid+2 <= 7) {
-						resvalid.push(chessboard[index-1][valid+2]);
-					}
-					if(valid-2 >= 0) {
-						resvalid.push(chessboard[index-1][valid-2]);
-					}
-				}
-				
+        //строка для хранения результата вариантов ходов
+        var strres = '';
 
-					$.each(resvalid, function (index, value){
-                       strres =  strres + value + ' ';
-                    });
-					$('#result').text('');
-                    $('#result').text(strres);
-                    flag = 1;
+        $.each(chessboard, function (index, value) {
+            //проверяем правильность текущей позиции, если действительная выводим возможные варианты
+            valid = $.inArray(positionU, value);
+            if (valid != -1) {
+                var resvalid = [];
+                //пароверяем направление верх, существование возможных ходов
+                if ((index + 2) <= 7) {
+                    if (valid + 1 <= 7) {
+                        resvalid.push(chessboard[index + 2][valid + 1]);
+                    }
+                    if (valid - 1 >= 0) {
+                        resvalid.push(chessboard[index + 2][valid - 1]);
+                    }
+                }
+                if ((index + 1) <= 7) {
+                    if (valid + 2 <= 7) {
+                        resvalid.push(chessboard[index + 1][valid + 2]);
+                    }
+                    if (valid - 2 >= 0) {
+                        resvalid.push(chessboard[index + 1][valid - 2]);
+                    }
+                }
+                //пароверяем направление низ
+                if ((index - 2) >= 0) {
+                    if (valid + 1 <= 7) {
+                        resvalid.push(chessboard[index - 2][valid + 1]);
+                    }
+                    if (valid - 1 >= 0) {
+                        resvalid.push(chessboard[index - 2][valid - 1]);
+                    }
+                }
+                if ((index - 1) >= 0) {
+                    if (valid + 2 <= 7) {
+                        resvalid.push(chessboard[index - 1][valid + 2]);
+                    }
+                    if (valid - 2 >= 0) {
+                        resvalid.push(chessboard[index - 1][valid - 2]);
+                    }
+                }
+
+                //формируем строку возможных вариантов
+                $.each(resvalid, function (index, value) {
+                    strres = strres + value + ' ';
+                });
+                $('#result').text('');
+                $('#result').text(strres);
+                flag = 1;
+                alert('Возможные варианты хода: ' + strres);
             }
         });
-            if(flag == 0){
-                alert('Неверная позиция');
-            }
+        if (flag == 0) {
+            alert('Неверная позиция');
+        }
     });
 });
